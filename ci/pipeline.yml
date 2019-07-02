@@ -1,0 +1,38 @@
+groups:
+  - name: Master
+    jobs:
+      - job-unit-test-master
+
+resources:
+  - name: hw-master
+    type: git
+    source:
+      uri: ((github_url))
+      username: ((username))
+      password: ((password))
+      branch:
+
+jobs:
+  - name: job-unit-test-master
+    public: true
+    serial: true
+    plan:
+      - get: hello-world-cicd
+        resource: hw-master
+        trigger: true
+      - task: unit-test-master
+        config:
+          platform: linux
+
+          image_resource:
+            type: docker-image
+            source: {repository: node}
+          inputs:
+            - name: hello-world-cicd
+              path: hello-world-cicd
+          run:
+            path: sh
+            args:
+              - -c
+              - |
+                ls -al
