@@ -35,6 +35,7 @@ jobs:
             args:
               - -c
               - |
-                echo "Changing directory"
+                echo "This is hello world statement"
                 cd hello-world-cicd/
-                npm test
+                ls -al
+
