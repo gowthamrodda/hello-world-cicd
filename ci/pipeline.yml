@@ -35,4 +35,5 @@ jobs:
             args:
               - -c
               - |
-                ls -al
+                cd hello-world-cicd
+                npm test
