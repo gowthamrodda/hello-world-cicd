@@ -10,7 +10,7 @@ resources:
       uri: ((github_url))
       username: ((username))
       password: ((password))
-      branch:
+      branch: master
 
 jobs:
   - name: job-unit-test-master
