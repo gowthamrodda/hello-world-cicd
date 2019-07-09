@@ -2,6 +2,7 @@ groups:
   - name: Master
     jobs:
       - job-unit-test-master
+      - job-build-master
 
 resources:
   - name: hw-master
@@ -11,6 +12,10 @@ resources:
       username: ((username))
       password: ((password))
       branch: master
+  - name: dh-repo-master
+    type: docker-image
+    source: &dh-repo
+      repository: "grodda/hello-world-cicd"
 
 jobs:
   - name: job-unit-test-master
@@ -38,4 +43,16 @@ jobs:
                 cd hello-world-cicd/
                 npm install
                 npm test
+  - name: job-dh-push-master
+    public: true
+    plan:
+      - get: hello-world-cicd
+        resource: hw-master
+        version: "every"
+        trigger: true
+        passed: [job-unit-test-master]
+      - put: dh-repo-master
+        params:
+          build: hello-world-cicd
+          dockerfile: hello-world-cicd/Dockerfile
 
