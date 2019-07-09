@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    image: grodda/hello-world-cicd
+    ports:
+      - "3000:3000"
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: alpha
+        awslogs-region: ap-south-1
+        awslogs-stream-prefix: web
