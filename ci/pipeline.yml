@@ -2,7 +2,7 @@ groups:
   - name: Master
     jobs:
       - job-unit-test-master
-      - job-build-master
+      - job-dh-push-master
 
 resources:
   - name: hw-master
@@ -15,6 +15,9 @@ resources:
   - name: dh-repo-master
     type: docker-image
     source: &dh-repo
+      uri: "https://cloud.docker.com/repository/docker/grodda/hello-world-cicd"
+      username: "grodda"
+      password: "Jenny@123"
       repository: "grodda/hello-world-cicd"
 
 jobs:
