@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 COMPOSE_FILE="hello-world-cicd/ci/master/ecs-master.compose.yml"
 PROJECT_PREFIX="hello-world"

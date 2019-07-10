@@ -83,6 +83,9 @@ jobs:
             args:
               - -c
               - |
+                ls -al
+                cd hello-world-cicd/ci/master/
+                ls -al
                 chmod 755 hello-world-cicd/ci/master/ecs-cli-deploy.sh
                 hello-world-cicd/ci/master/ecs-cli-deploy.sh ((aws_access_key_id)) ((aws_secret_access_key))
 
