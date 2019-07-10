@@ -3,6 +3,7 @@ groups:
     jobs:
       - job-unit-test-master
       - job-dh-push-master
+      - job-ecs-deploy-master
 
 resources:
   - name: hw-master
@@ -58,4 +59,30 @@ jobs:
         params:
           build: hello-world-cicd
           dockerfile: hello-world-cicd/Dockerfile
+  - name: job-ecs-deploy-master
+    public: true
+    plan:
+      - get: hello-world-cicd
+        resource: hw-master
+        version: "every"
+        trigger: true
+        passed: [job-dh-push-master]
+      - task: ecs-deploy-master
+        config:
+          platform: linux
+
+          image_resource:
+            type: docker-image
+            source: { repository: sahsu/docker-ecs-cli}
+
+          inputs:
+            - name: hello-world-cicd
+              path: hello-world-cicd
+          run:
+            path: sh
+            args:
+              - -c
+              - |
+                chmod 755 hello-world-cicd/ci/master/ecs-cli-deploy.sh
+                hello-world-cicd/ci/master/ecs-cli-deploy.sh ((aws_access_key_id)) ((aws_secret_access_key))
 
