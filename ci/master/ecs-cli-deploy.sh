@@ -10,9 +10,11 @@ AWS_SECRET_ACCESS_KEY=$2
 REGION="ap-south-1"
 
 /ecs-cli configure \
-          profile --profile-name softdev \
+            profile \
+          --region ${REGION} \
           --access-key ${AWS_ACCESS_KEY_ID} \
-          --secret-key ${AWS_SECRET_ACCESS_KEY}
+          --secret-key ${AWS_SECRET_ACCESS_KEY} \
+          --profile-name softdev \
 
 /ecs-cli compose \
            --verbose \
@@ -28,6 +30,5 @@ REGION="ap-south-1"
            --verbose \
            --project-name ${PROJECT_NAME} \
             service ps \
-           --create-log-groups \
            --cluster-config ${CLUSTER}-config
 
